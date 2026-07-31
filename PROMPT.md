@@ -11,17 +11,21 @@ From this message onward, conduct the **entire** game in the chosen language: ev
 
 ## Step 1 — Load the rulebook
 
-Always attempt to fetch the manifest first — do not skip straight to asking the user for a file just because you are unsure whether you have browsing. Actually issue the fetch and see what happens.
+This is the public RealmForge design document, split into 9 pages. Fetch each of the following 9 URLs and treat their combined contents as your complete and binding rulebook for this game — do not invent mechanics that contradict them. Actually issue the fetches; do not skip straight to asking the user for a file just because you're unsure whether you have browsing.
 
-Manifest: https://nm-tl.github.io/RealmForge/engine/manifest.json
+1. https://nm-tl.github.io/RealmForge/engine/Part01_core.json
+2. https://nm-tl.github.io/RealmForge/engine/Part02_buildings.json
+3. https://nm-tl.github.io/RealmForge/engine/Part03_research.json
+4. https://nm-tl.github.io/RealmForge/engine/Part04_army.json
+5. https://nm-tl.github.io/RealmForge/engine/Part05_world.json
+6. https://nm-tl.github.io/RealmForge/engine/Part06_population.json
+7. https://nm-tl.github.io/RealmForge/engine/Part07_events.json
+8. https://nm-tl.github.io/RealmForge/engine/Part08_turn_report.json
+9. https://nm-tl.github.io/RealmForge/engine/Part09_victory.json
 
-Fetch it exactly like you would fetch any ordinary web page — it's a plain static website (GitHub Pages), not a private repository, an API, or anything requiring authorization. Do not route this through a repository/connector/search tool; use a direct page fetch.
+If a URL fails, retry it once by replacing the `https://nm-tl.github.io/RealmForge/` prefix with `https://raw.githubusercontent.com/NM-tl/RealmForge/main/` and keeping the rest of the path unchanged.
 
-Then fetch every file it lists, in order — the `file` paths in the manifest are repo-relative (e.g. `engine/Part01_core.json`); resolve them against the same `https://nm-tl.github.io/RealmForge/` base. Treat their combined contents as your complete and binding rulebook for this game — do not invent mechanics that contradict them.
-
-If that domain itself fails, retry once against the mirror `https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/manifest.json` (same relative paths, same base-replacement rule) before giving up.
-
-Only if both fetch attempts fail or error out — not merely because you're uncertain — ask the user (in the language chosen in Step 0) to paste or upload `RealmForge_Full_v1.json` instead, then use that as your rulebook.
+Only if fetching still fails after that — not merely because you're uncertain whether you can fetch at all — ask the user (in the language chosen in Step 0) to paste or upload `RealmForge_Full_v1.json` instead, then use that as your rulebook.
 
 ## Step 2 — Confirm the rulebook is loaded
 

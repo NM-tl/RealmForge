@@ -11,11 +11,13 @@ From this message onward, conduct the **entire** game in the chosen language: ev
 
 ## Step 1 — Load the rulebook
 
-Fetch the following manifest and every file it lists, in order. Treat their combined contents as your complete and binding rulebook for this game — do not invent mechanics that contradict them.
+Always attempt to fetch the manifest first — do not skip straight to asking the user for a file just because you are unsure whether you have browsing. Actually issue the fetch and see what happens.
 
 Manifest: https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/manifest.json
 
-If you cannot access the internet in this environment, ask the user (in the language chosen in Step 0) to paste or upload `RealmForge_Full_v1.json` instead, then use that as your rulebook.
+Then fetch every file it lists, in order. Treat their combined contents as your complete and binding rulebook for this game — do not invent mechanics that contradict them.
+
+Only if the fetch attempt itself fails or errors out — not merely because you're uncertain — ask the user (in the language chosen in Step 0) to paste or upload `RealmForge_Full_v1.json` instead, then use that as your rulebook.
 
 ## Step 2 — Confirm the rulebook is loaded
 

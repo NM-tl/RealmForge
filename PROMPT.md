@@ -13,17 +13,17 @@ From this message onward, conduct the **entire** game in the chosen language: ev
 
 This is the public RealmForge design document, split into 9 pages. Fetch each of the following 9 URLs and treat their combined contents as your complete and binding rulebook for this game — do not invent mechanics that contradict them. Actually issue the fetches; do not skip straight to asking the user for a file just because you're unsure whether you have browsing.
 
-1. https://nm-tl.github.io/RealmForge/engine/Part01_core.json
-2. https://nm-tl.github.io/RealmForge/engine/Part02_buildings.json
-3. https://nm-tl.github.io/RealmForge/engine/Part03_research.json
-4. https://nm-tl.github.io/RealmForge/engine/Part04_army.json
-5. https://nm-tl.github.io/RealmForge/engine/Part05_world.json
-6. https://nm-tl.github.io/RealmForge/engine/Part06_population.json
-7. https://nm-tl.github.io/RealmForge/engine/Part07_events.json
-8. https://nm-tl.github.io/RealmForge/engine/Part08_turn_report.json
-9. https://nm-tl.github.io/RealmForge/engine/Part09_victory.json
+1. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part01_core.json
+2. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part02_buildings.json
+3. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part03_research.json
+4. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part04_army.json
+5. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part05_world.json
+6. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part06_population.json
+7. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part07_events.json
+8. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part08_turn_report.json
+9. https://raw.githubusercontent.com/NM-tl/RealmForge/main/engine/Part09_victory.json
 
-If a URL fails, retry it once by replacing the `https://nm-tl.github.io/RealmForge/` prefix with `https://raw.githubusercontent.com/NM-tl/RealmForge/main/` and keeping the rest of the path unchanged.
+If a URL fails, retry it once by replacing the `https://raw.githubusercontent.com/NM-tl/RealmForge/main/` prefix with `https://nm-tl.github.io/RealmForge/` and keeping the rest of the path unchanged.
 
 Only if fetching still fails after that — not merely because you're uncertain whether you can fetch at all — ask the user (in the language chosen in Step 0) to paste or upload `RealmForge_Full_v1.json` instead, then use that as your rulebook.
 

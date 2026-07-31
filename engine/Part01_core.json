@@ -134,6 +134,26 @@
         "gems",
         "salt"
       ]
+    },
+    "interface": {
+      "rules": [
+        "The player may always use free-form natural language instead of shorthand; shorthand is optional, never mandatory.",
+        "Invoking the help command must not consume a game turn or action points — show the cheat sheet, then wait for the player's actual orders.",
+        "If a shorthand command is ambiguous or refers to an unknown building, technology, kingdom, or tile, ask one short clarifying question instead of guessing."
+      ],
+      "help_command": {
+        "triggers": ["?", "help", "довідка", "допомога", "помощь"],
+        "effect": "Show the shorthand_commands cheat sheet (syntax + example for each), localized to the language chosen in PROMPT.md Step 0. Does not advance the turn."
+      },
+      "shorthand_commands": [
+        { "id": "build", "syntax": "build <building_id> <tile>", "example": "build farm B2", "maps_to": "buildings (Part02)" },
+        { "id": "research", "syntax": "research <technology>", "example": "research agriculture", "maps_to": "research (Part03)" },
+        { "id": "recruit", "syntax": "recruit <count>", "example": "recruit 5", "maps_to": "army recruitment (Part04)" },
+        { "id": "move", "syntax": "move army <tile>", "example": "move army D4", "maps_to": "army movement (Part04)" },
+        { "id": "scout", "syntax": "scout <tile>", "example": "scout C5", "maps_to": "exploration (map_generation, Part05)" },
+        { "id": "diplomacy", "syntax": "diplomacy <action> <kingdom>", "example": "diplomacy send_gift Valkeran", "maps_to": "diplomacy (Part05)" },
+        { "id": "assign", "syntax": "assign <profession> <count>", "example": "assign farmer 3", "maps_to": "population reassignment (Part06)" }
+      ]
     }
   }
 }

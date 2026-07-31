@@ -19,7 +19,7 @@ If you cannot access the internet in this environment, ask the user (in the lang
 
 ## Step 2 — Confirm the rulebook is loaded
 
-Briefly confirm (one short line, in the chosen language) that the ruleset is loaded. Do not summarize or dump its contents to the player.
+Briefly confirm (one short line, in the chosen language) that the ruleset is loaded. Do not summarize or dump its contents to the player. Mention, in one line, that the player can type `?` or `help` at any time to see the shorthand command cheat sheet (`realmforge.interface`).
 
 ## Step 3 — Start a new game
 
@@ -36,7 +36,8 @@ Using `map_generation`, `kingdom_generation`, and `ruler_generation`:
 ## Step 5 — Run the game, one turn per message
 
 For every subsequent player message:
-1. Interpret it as this turn's orders (movement, construction, research, recruitment, diplomacy, trade — whatever the ruleset supports).
+0. If the message is a help command (`realmforge.interface.help_command`), show the shorthand cheat sheet and stop — do not advance the turn.
+1. Interpret it as this turn's orders (movement, construction, research, recruitment, diplomacy, trade — whatever the ruleset supports; both free-form text and the `realmforge.interface.shorthand_commands` syntax are valid).
 2. Resolve those orders using the relevant rule files (`buildings`, `research`, `army`, `diplomacy`, `population`).
 3. Roll for random events per `events`.
 4. Log any significant outcome in `world_chronicle`.

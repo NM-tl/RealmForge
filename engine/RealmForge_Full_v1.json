@@ -134,6 +134,26 @@
         "gems",
         "salt"
       ]
+    },
+    "interface": {
+      "rules": [
+        "The player may always use free-form natural language instead of shorthand; shorthand is optional, never mandatory.",
+        "Invoking the help command must not consume a game turn or action points — show the cheat sheet, then wait for the player's actual orders.",
+        "If a shorthand command is ambiguous or refers to an unknown building, technology, kingdom, or tile, ask one short clarifying question instead of guessing."
+      ],
+      "help_command": {
+        "triggers": ["?", "help", "довідка", "допомога", "помощь"],
+        "effect": "Show the shorthand_commands cheat sheet (syntax + example for each), localized to the language chosen in PROMPT.md Step 0. Does not advance the turn."
+      },
+      "shorthand_commands": [
+        { "id": "build", "syntax": "build <building_id> <tile>", "example": "build farm B2", "maps_to": "buildings (Part02)" },
+        { "id": "research", "syntax": "research <technology>", "example": "research agriculture", "maps_to": "research (Part03)" },
+        { "id": "recruit", "syntax": "recruit <count>", "example": "recruit 5", "maps_to": "army recruitment (Part04)" },
+        { "id": "move", "syntax": "move army <tile>", "example": "move army D4", "maps_to": "army movement (Part04)" },
+        { "id": "scout", "syntax": "scout <tile>", "example": "scout C5", "maps_to": "exploration (map_generation, Part05)" },
+        { "id": "diplomacy", "syntax": "diplomacy <action> <kingdom>", "example": "diplomacy send_gift Valkeran", "maps_to": "diplomacy (Part05)" },
+        { "id": "assign", "syntax": "assign <profession> <count>", "example": "assign farmer 3", "maps_to": "population reassignment (Part06)" }
+      ]
     }
   },
   "buildings": {
@@ -878,13 +898,26 @@
       "Omit a section only when it has no content that turn (e.g. no new diplomacy event).",
       "Never reveal information the player has not scouted (respect fog_of_war from Part01).",
       "Always show concrete numbers; never use vague terms like 'a lot of food'.",
-      "Prefer markdown tables over prose for state, construction, research, and diplomacy sections."
+      "Prefer markdown tables over prose for state, construction, research, and diplomacy sections.",
+      "The player may type a help command (Part01 realmforge.interface.help_command) at any time; respond with the shorthand cheat sheet instead of a normal turn report, and do not advance the turn."
     ],
     "sections": [
       {
         "id": "header",
         "header": "🏛️ Turn {turn_number}",
         "content": "In-game year, e.g. '7965 BC'."
+      },
+      {
+        "id": "alert_banner",
+        "header": null,
+        "content": "One short line, prefixed with ⚠️, directly under the turn header — only when at least one urgent condition applies this turn (see trigger_conditions). Summarize the single most urgent issue in a few words; do not restate details already covered in Orders Executed or Kingdom Status. Omit this section entirely when no urgent condition applies — do not print an empty or reassuring banner.",
+        "trigger_conditions": [
+          "Food income negative, or storage will run out within 2 turns.",
+          "Happiness below 25%.",
+          "War was declared this turn, by either side.",
+          "The capital is under direct attack or siege.",
+          "A treaty or alliance was broken this turn."
+        ]
       },
       {
         "id": "orders_executed",
@@ -906,7 +939,7 @@
         "header": "🗺️ Map",
         "content": "Emoji-grid table of explored/visible tiles only, columns lettered (A, B, C...), rows numbered, unexplored tiles shown as ❓. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
         "map_render": {
-          "rule": "Every time the map section is shown, render tiles using this exact symbol table, then print the legend immediately below the map, every single time — never omit it, even on repeated turns.",
+          "rule": "Every time the map section is shown, render tiles using this exact symbol table. Below the map, print the legend per legend_format — full on a symbol's first appearance, collapsed afterward.",
           "tile_symbols": [
             {
               "terrain": "plains",
@@ -979,7 +1012,7 @@
               "description": "Not yet scouted. Send units nearby to reveal it."
             }
           ],
-          "legend_format": "A short line per symbol actually present on the current map: '🌾 Plains — fertile open ground, best for farms.' One line per symbol, in the order the symbols first appear reading left-to-right, top-to-bottom. Do not list symbols that aren't on the visible map that turn."
+          "legend_format": "Track, across the whole game (like world_chronicle — internal bookkeeping, never shown as such to the player), which terrain/feature symbols have already had their legend line explained. On any turn, if the visible map contains at least one symbol never explained before, print a full legend: one line per such new symbol, in first-appearance reading order (left-to-right, top-to-bottom), format '🌾 Plains — fertile open ground, best for farms.' If every symbol currently visible has already been explained in an earlier turn, skip the full legend and print a single line instead: 'Legend unchanged since Turn {N}' (N = the turn a symbol was last newly explained), translated into the language chosen in PROMPT.md Step 0. Never list a symbol that is not on the current visible map."
         }
       },
       {

@@ -564,7 +564,8 @@
       "Government_type and personality are chosen randomly from the lists defined in Part01 (world.kingdoms).",
       "Starting relation to player is Neutral (50/100) unless difficulty settings modify it.",
       "AI kingdoms follow the same economic, research and military rules as the player (design_principles).",
-      "Neutral tribes are smaller, do not expand territory, and interact only via diplomacy or combat events."
+      "Neutral tribes are smaller, do not expand territory, and interact only via diplomacy or combat events.",
+      "AI kingdoms and neutral tribes exist in the world from game start but are hidden from the player (fog_of_war) until discovered: through scouting their territory or capital, a border/event contact, or combat. Never reveal a kingdom's or tribe's name, ruler, or relation before it has been discovered this way."
     ],
     "starting_strength_by_difficulty": {
       "Easy": {
@@ -688,7 +689,8 @@
     "rules": [
       "Relation value ranges from 0 to 100 for every pair of (player, kingdom/tribe).",
       "Relations shift gradually from events: trade, gifts, broken promises, combat, border disputes, shared enemies.",
-      "Large relation shifts in a single turn should be rare; most events shift relation by 2-10 points."
+      "Large relation shifts in a single turn should be rare; most events shift relation by 2-10 points.",
+      "The Diplomacy section of the turn report must only list kingdoms and tribes the player has already discovered (see kingdom_generation); undiscovered ones are tracked internally but never shown or hinted at."
     ],
     "relation_scale": [
       {
@@ -948,7 +950,7 @@
             },
             {
               "terrain": "capital",
-              "symbol": "🏛️",
+              "symbol": "🏰",
               "description": "A kingdom's capital city (player or AI)."
             },
             {
@@ -993,7 +995,7 @@
       {
         "id": "diplomacy_status",
         "header": "🤝 Diplomacy",
-        "content": "Table of known kingdoms/tribes with relation value, emoji tier (Part05), and status (e.g. treaty type)."
+        "content": "Table of discovered kingdoms/tribes only with relation value, emoji tier (Part05), and status (e.g. treaty type). Never list a kingdom or neutral tribe the player has not yet discovered through scouting, contact, or an event (Part05 diplomacy.rules)."
       }
     ],
     "style_notes": [

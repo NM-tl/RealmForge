@@ -44,7 +44,7 @@
             { "terrain": "desert", "symbol": "🏜️", "description": "Harsh, low-yield terrain. Occasionally hides salt or gems." },
             { "terrain": "swamp", "symbol": "🟢", "description": "Slows movement. Occasional salt deposits." },
             { "terrain": "snow", "symbol": "❄️", "description": "Rare, cold terrain with limited production." },
-            { "terrain": "capital", "symbol": "🏛️", "description": "A kingdom's capital city (player or AI)." },
+            { "terrain": "capital", "symbol": "🏰", "description": "A kingdom's capital city (player or AI)." },
             { "terrain": "city", "symbol": "🏘️", "description": "A non-capital settlement." },
             { "terrain": "ruins", "symbol": "🏺", "description": "Ancient ruins. Explore for a one-time reward." },
             { "terrain": "horses", "symbol": "🐎", "description": "Wild horse herd. Requires the right technology to tame." },
@@ -67,7 +67,7 @@
       {
         "id": "diplomacy_status",
         "header": "🤝 Diplomacy",
-        "content": "Table of known kingdoms/tribes with relation value, emoji tier (Part05), and status (e.g. treaty type)."
+        "content": "Table of discovered kingdoms/tribes only with relation value, emoji tier (Part05), and status (e.g. treaty type). Never list a kingdom or neutral tribe the player has not yet discovered through scouting, contact, or an event (Part05 diplomacy.rules)."
       }
     ],
     "style_notes": [

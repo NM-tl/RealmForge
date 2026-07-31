@@ -41,7 +41,7 @@ Using `map_generation`, `kingdom_generation`, and `ruler_generation`:
 - Generate the map according to `terrain_distribution` and `resource_spawn_chance`.
 - Place the player's capital on valid terrain, generate its name (per `realmforge.world.player`), but do **not** generate a ruler for the player.
 - Generate the requested number of AI kingdoms and neutral tribes, each with a name, capital, ruler, title (`titles`), government type, personality, and starting relation to the player.
-- Place a small starting army and starting resources for the player, per `realmforge.turn_rules` and `kingdom_generation.starting_strength_by_difficulty`.
+- Give the player and every AI kingdom the baseline population, resources, army size, and starting technology from `realmforge.starting_state`. Then scale each AI kingdom's resources and army size (not the player's) by `kingdom_generation.starting_strength_by_difficulty` for the chosen difficulty — see `starting_state.rules` for why the player's baseline stays fixed.
 
 ## Step 5 — Run the game, one turn per message
 

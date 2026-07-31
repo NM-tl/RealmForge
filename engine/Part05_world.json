@@ -59,6 +59,7 @@
       "AI kingdoms and neutral tribes exist in the world from game start but are hidden from the player (fog_of_war) until discovered: through scouting their territory or capital, a border/event contact, or combat. Never reveal a kingdom's or tribe's name, ruler, or relation before it has been discovered this way."
     ],
     "starting_strength_by_difficulty": {
+      "note": "Applies only to AI kingdoms' resources and army_size (from Part01 realmforge.starting_state). The player's own starting_state values are fixed and never scaled by difficulty — see starting_state.rules in Part01.",
       "Easy": { "resource_multiplier": 0.8, "army_multiplier": 0.7 },
       "Normal": { "resource_multiplier": 1.0, "army_multiplier": 1.0 },
       "Hard": { "resource_multiplier": 1.2, "army_multiplier": 1.3 },

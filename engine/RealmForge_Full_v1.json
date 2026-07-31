@@ -65,6 +65,19 @@
       "trade_cost": 1,
       "diplomacy_cost": 1
     },
+    "starting_state": {
+      "rules": [
+        "The player and every AI kingdom begin with identical population, profession_split, resources, army_size, and starting_technology below — this is the fixed baseline, not affected by difficulty.",
+        "Only AI kingdoms additionally scale their resources and army_size by kingdom_generation.starting_strength_by_difficulty (Part05) for the chosen difficulty; the player's own starting_state values never change with difficulty — difficulty makes opponents stronger or weaker, not the player.",
+        "Any resource not listed under resources starts at 0.",
+        "starting_technology is already researched at game start, so its unlocked buildings are buildable from Turn 1 (avoids an empty Construction section on the first turn)."
+      ],
+      "population": 8,
+      "profession_split": { "farmer": 4, "lumberjack": 2, "unemployed": 2 },
+      "resources": { "food": 40, "wood": 30, "stone": 20, "gold": 10 },
+      "army_size": 5,
+      "starting_technology": ["agriculture"]
+    },
     "world": {
       "player": {
         "city_count": 1,
@@ -588,6 +601,7 @@
       "AI kingdoms and neutral tribes exist in the world from game start but are hidden from the player (fog_of_war) until discovered: through scouting their territory or capital, a border/event contact, or combat. Never reveal a kingdom's or tribe's name, ruler, or relation before it has been discovered this way."
     ],
     "starting_strength_by_difficulty": {
+      "note": "Applies only to AI kingdoms' resources and army_size (from Part01 realmforge.starting_state). The player's own starting_state values are fixed and never scaled by difficulty — see starting_state.rules in Part01.",
       "Easy": {
         "resource_multiplier": 0.8,
         "army_multiplier": 0.7

@@ -1,0 +1,158 @@
+{
+  "research": {
+    "rules": {
+      "active_research_limit": 1,
+      "action_point_cost": 2,
+      "research_progress": "per turn until completed"
+    },
+    "ages": [
+      {
+        "id": "stone_age",
+        "name": "Stone Age",
+        "technologies": [
+          {
+            "id": "agriculture",
+            "name": "Agriculture",
+            "unlocks": [
+              "Farm"
+            ]
+          },
+          {
+            "id": "hunting",
+            "name": "Hunting",
+            "unlocks": [
+              "Scout efficiency",
+              "+food from events"
+            ]
+          },
+          {
+            "id": "woodworking",
+            "name": "Woodworking",
+            "unlocks": [
+              "Lumber Mill"
+            ]
+          },
+          {
+            "id": "stoneworking",
+            "name": "Stoneworking",
+            "unlocks": [
+              "Quarry",
+              "Warehouse"
+            ]
+          },
+          {
+            "id": "fishing",
+            "name": "Fishing",
+            "requires": [
+              "Agriculture"
+            ],
+            "unlocks": [
+              "Fishing Camp"
+            ]
+          },
+          {
+            "id": "tracking",
+            "name": "Tracking",
+            "requires": [
+              "Hunting"
+            ],
+            "unlocks": [
+              "Better exploration"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "copper_age",
+        "name": "Copper Age",
+        "technologies": [
+          {
+            "id": "copper_smelting",
+            "name": "Copper Smelting",
+            "requires": [
+              "Stoneworking"
+            ],
+            "unlocks": [
+              "Copper Mine",
+              "Copper Swords"
+            ]
+          },
+          {
+            "id": "trade",
+            "name": "Trade",
+            "requires": [
+              "Agriculture"
+            ],
+            "unlocks": [
+              "Market",
+              "Trade agreements"
+            ]
+          },
+          {
+            "id": "masonry",
+            "name": "Masonry",
+            "requires": [
+              "Stoneworking"
+            ],
+            "unlocks": [
+              "Workshop"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bronze_age",
+        "name": "Bronze Age",
+        "technologies": [
+          {
+            "id": "bronze_working",
+            "name": "Bronze Working",
+            "requires": [
+              "Copper Smelting"
+            ],
+            "unlocks": [
+              "Bronze Swords"
+            ]
+          },
+          {
+            "id": "engineering",
+            "name": "Engineering",
+            "requires": [
+              "Masonry"
+            ],
+            "unlocks": [
+              "Advanced buildings"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "iron_age",
+        "name": "Iron Age",
+        "technologies": [
+          {
+            "id": "iron_working",
+            "name": "Iron Working",
+            "requires": [
+              "Bronze Working"
+            ],
+            "unlocks": [
+              "Iron Mine",
+              "Iron Swords"
+            ]
+          },
+          {
+            "id": "logistics",
+            "name": "Logistics",
+            "requires": [
+              "Engineering"
+            ],
+            "unlocks": [
+              "Future transport bonuses"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

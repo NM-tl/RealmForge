@@ -1,0 +1,1036 @@
+{
+  "realmforge": {
+    "version": "1.0",
+    "name": "RealmForge",
+    "engine": "ChatGPT",
+    "description": "Chat-based 4X strategy game where one player message equals one game turn.",
+    "design_principles": [
+      "One player message equals one turn.",
+      "The AI is the game engine, narrator and rules arbiter.",
+      "The AI never cheats.",
+      "Every mechanic must create meaningful decisions instead of unnecessary complexity.",
+      "The world must remain internally consistent.",
+      "The player always controls exactly one capital city.",
+      "Enemy kingdoms follow the same rules as the player.",
+      "Every important event is recorded in the World Chronicle.",
+      "The player never has a generated ruler.",
+      "Only the player's capital receives a randomly generated name."
+    ],
+    "new_game": {
+      "questions": [
+        {
+          "id": "map_size",
+          "type": "number",
+          "default": 20,
+          "allowed": [
+            10,
+            20,
+            30,
+            40
+          ]
+        },
+        {
+          "id": "enemy_kingdoms",
+          "type": "number",
+          "default": 4,
+          "min": 1,
+          "max": 20
+        },
+        {
+          "id": "neutral_tribes",
+          "type": "number",
+          "default": 6,
+          "min": 0,
+          "max": 30
+        },
+        {
+          "id": "difficulty",
+          "type": "enum",
+          "values": [
+            "Easy",
+            "Normal",
+            "Hard",
+            "Insane"
+          ],
+          "default": "Normal"
+        }
+      ]
+    },
+    "turn_rules": {
+      "default_action_points": 6,
+      "movement_cost": 1,
+      "build_cost": 2,
+      "research_cost": 2,
+      "recruit_cost": 2,
+      "trade_cost": 1,
+      "diplomacy_cost": 1
+    },
+    "world": {
+      "player": {
+        "city_count": 1,
+        "generate_ruler": false,
+        "generate_capital_name": true
+      },
+      "kingdoms": {
+        "fields": [
+          "kingdom_name",
+          "capital_name",
+          "ruler_name",
+          "ruler_title",
+          "government_type",
+          "personality",
+          "relations"
+        ],
+        "government_types": [
+          "Kingdom",
+          "Empire",
+          "Republic",
+          "Confederation",
+          "Principality",
+          "Tribe"
+        ],
+        "personalities": [
+          "Aggressive",
+          "Trader",
+          "Expansionist",
+          "Defensive",
+          "Scientific",
+          "Balanced",
+          "Isolationist"
+        ]
+      }
+    },
+    "map": {
+      "fog_of_war": true,
+      "default_size": 20,
+      "movement": {
+        "max_tiles_per_turn": 1,
+        "allow_diagonal": true
+      }
+    },
+    "terrains": [
+      "plains",
+      "forest",
+      "mountains",
+      "hills",
+      "water",
+      "swamp",
+      "desert",
+      "snow"
+    ],
+    "resources": {
+      "basic": [
+        "food",
+        "wood",
+        "stone"
+      ],
+      "strategic": [
+        "copper",
+        "iron",
+        "horses"
+      ],
+      "economic": [
+        "gold",
+        "gems",
+        "salt"
+      ]
+    }
+  },
+  "buildings": {
+    "rules": [
+      "Only one building per tile unless upgraded.",
+      "Buildings require terrain and resources.",
+      "Construction consumes 2 AP.",
+      "Only completed buildings provide income."
+    ],
+    "city": [
+      {
+        "id": "warehouse",
+        "name": "Warehouse",
+        "cost": {
+          "wood": 40,
+          "stone": 20
+        },
+        "effect": "+100 storage"
+      },
+      {
+        "id": "workshop",
+        "name": "Workshop",
+        "cost": {
+          "wood": 50,
+          "stone": 40
+        },
+        "effect": "Unlock advanced production"
+      },
+      {
+        "id": "market",
+        "name": "Market",
+        "cost": {
+          "wood": 60,
+          "stone": 30
+        },
+        "effect": "+gold income from trade"
+      }
+    ],
+    "tile": [
+      {
+        "id": "farm",
+        "terrain": "plains",
+        "resource": "food",
+        "cost": {
+          "wood": 20
+        },
+        "yield": "+12 food/turn"
+      },
+      {
+        "id": "lumber_mill",
+        "terrain": "forest",
+        "resource": "wood",
+        "cost": {
+          "stone": 15
+        },
+        "yield": "+10 wood/turn"
+      },
+      {
+        "id": "quarry",
+        "terrain": "mountains|hills",
+        "resource": "stone",
+        "cost": {
+          "wood": 20
+        },
+        "yield": "+8 stone/turn"
+      },
+      {
+        "id": "mine_copper",
+        "terrain": "mountains",
+        "resource": "copper",
+        "cost": {
+          "wood": 25,
+          "stone": 20
+        },
+        "yield": "+4 copper/turn"
+      },
+      {
+        "id": "mine_iron",
+        "terrain": "mountains",
+        "resource": "iron",
+        "cost": {
+          "wood": 30,
+          "stone": 30
+        },
+        "yield": "+4 iron/turn"
+      },
+      {
+        "id": "gold_mine",
+        "terrain": "mountains|hills",
+        "resource": "gold",
+        "cost": {
+          "wood": 30,
+          "stone": 40
+        },
+        "yield": "+3 gold/turn"
+      },
+      {
+        "id": "fishing_camp",
+        "terrain": "water",
+        "resource": "food",
+        "requires": "Fishing",
+        "cost": {
+          "wood": 25
+        },
+        "yield": "+10 food/turn"
+      }
+    ],
+    "upgrades": [
+      "Most buildings have 3 levels.",
+      "Each level increases production by ~50%.",
+      "Upgrade costs more than previous level."
+    ]
+  },
+  "research": {
+    "rules": {
+      "active_research_limit": 1,
+      "action_point_cost": 2,
+      "research_progress": "per turn until completed"
+    },
+    "ages": [
+      {
+        "id": "stone_age",
+        "name": "Stone Age",
+        "technologies": [
+          {
+            "id": "agriculture",
+            "name": "Agriculture",
+            "unlocks": [
+              "Farm"
+            ]
+          },
+          {
+            "id": "hunting",
+            "name": "Hunting",
+            "unlocks": [
+              "Scout efficiency",
+              "+food from events"
+            ]
+          },
+          {
+            "id": "woodworking",
+            "name": "Woodworking",
+            "unlocks": [
+              "Lumber Mill"
+            ]
+          },
+          {
+            "id": "stoneworking",
+            "name": "Stoneworking",
+            "unlocks": [
+              "Quarry",
+              "Warehouse"
+            ]
+          },
+          {
+            "id": "fishing",
+            "name": "Fishing",
+            "requires": [
+              "Agriculture"
+            ],
+            "unlocks": [
+              "Fishing Camp"
+            ]
+          },
+          {
+            "id": "tracking",
+            "name": "Tracking",
+            "requires": [
+              "Hunting"
+            ],
+            "unlocks": [
+              "Better exploration"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "copper_age",
+        "name": "Copper Age",
+        "technologies": [
+          {
+            "id": "copper_smelting",
+            "name": "Copper Smelting",
+            "requires": [
+              "Stoneworking"
+            ],
+            "unlocks": [
+              "Copper Mine",
+              "Copper Swords"
+            ]
+          },
+          {
+            "id": "trade",
+            "name": "Trade",
+            "requires": [
+              "Agriculture"
+            ],
+            "unlocks": [
+              "Market",
+              "Trade agreements"
+            ]
+          },
+          {
+            "id": "masonry",
+            "name": "Masonry",
+            "requires": [
+              "Stoneworking"
+            ],
+            "unlocks": [
+              "Workshop"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bronze_age",
+        "name": "Bronze Age",
+        "technologies": [
+          {
+            "id": "bronze_working",
+            "name": "Bronze Working",
+            "requires": [
+              "Copper Smelting"
+            ],
+            "unlocks": [
+              "Bronze Swords"
+            ]
+          },
+          {
+            "id": "engineering",
+            "name": "Engineering",
+            "requires": [
+              "Masonry"
+            ],
+            "unlocks": [
+              "Advanced buildings"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "iron_age",
+        "name": "Iron Age",
+        "technologies": [
+          {
+            "id": "iron_working",
+            "name": "Iron Working",
+            "requires": [
+              "Bronze Working"
+            ],
+            "unlocks": [
+              "Iron Mine",
+              "Iron Swords"
+            ]
+          },
+          {
+            "id": "logistics",
+            "name": "Logistics",
+            "requires": [
+              "Engineering"
+            ],
+            "unlocks": [
+              "Future transport bonuses"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "army": {
+    "rules": {
+      "single_player_army": true,
+      "movement_per_turn": 1,
+      "recruit_action_points": 2
+    },
+    "size": {
+      "description": "Number of active warriors."
+    },
+    "experience": {
+      "levels": [
+        {
+          "id": "recruit",
+          "bonus": 0
+        },
+        {
+          "id": "trained",
+          "bonus": 5
+        },
+        {
+          "id": "experienced",
+          "bonus": 10
+        },
+        {
+          "id": "veteran",
+          "bonus": 20
+        },
+        {
+          "id": "elite",
+          "bonus": 35
+        },
+        {
+          "id": "legendary",
+          "bonus": 50
+        }
+      ],
+      "gain": "Victories and military events.",
+      "loss": "Heavy casualties may reduce average experience."
+    },
+    "equipment": {
+      "levels": [
+        {
+          "id": "clubs_spears",
+          "attack_bonus": 0
+        },
+        {
+          "id": "stone_axes",
+          "attack_bonus": 10
+        },
+        {
+          "id": "copper_swords",
+          "attack_bonus": 20
+        },
+        {
+          "id": "bronze_swords",
+          "attack_bonus": 30
+        },
+        {
+          "id": "iron_swords",
+          "attack_bonus": 45
+        },
+        {
+          "id": "steel_swords",
+          "attack_bonus": 60
+        }
+      ]
+    },
+    "combat": {
+      "factors": [
+        "Army size",
+        "Experience bonus",
+        "Equipment bonus",
+        "Terrain modifier",
+        "Random factor (small)"
+      ],
+      "results": [
+        "Victory",
+        "Defeat",
+        "Pyrrhic Victory",
+        "Retreat"
+      ],
+      "aftermath": [
+        "Apply casualties",
+        "Award experience",
+        "Update World Chronicle"
+      ]
+    }
+  },
+  "map_generation": {
+    "rules": [
+      "Map is generated once at game start based on map_size from new_game settings.",
+      "Terrain is assigned per tile using terrain_distribution probabilities.",
+      "Adjacent tiles should form coherent clusters (e.g. forests near forests, mountains near hills) rather than pure random noise.",
+      "Water tiles form coastlines or lakes, not isolated single tiles, where possible.",
+      "The player's capital is placed on plains or hills, never on water, mountains, swamp or desert.",
+      "Minimum distance between any two capitals (player or AI kingdoms) is 4 tiles.",
+      "Special features are placed after terrain and are rare."
+    ],
+    "terrain_distribution": {
+      "plains": 0.25,
+      "forest": 0.2,
+      "mountains": 0.15,
+      "hills": 0.12,
+      "water": 0.15,
+      "swamp": 0.06,
+      "desert": 0.05,
+      "snow": 0.02
+    },
+    "resource_spawn_chance": {
+      "plains": {
+        "horses": 0.08
+      },
+      "forest": {
+        "wild_game": 0.1
+      },
+      "mountains": {
+        "copper": 0.15,
+        "iron": 0.12,
+        "gold": 0.05
+      },
+      "hills": {
+        "gold": 0.04,
+        "stone_bonus": 0.1
+      },
+      "water": {
+        "fish": 0.2
+      },
+      "desert": {
+        "salt": 0.1,
+        "gems": 0.02
+      },
+      "swamp": {
+        "salt": 0.05
+      }
+    },
+    "special_features": {
+      "chance_per_tile": 0.02,
+      "types": [
+        {
+          "id": "ancient_ruins",
+          "effect": "One-time reward when explored: resources, gold, or a free technology hint."
+        },
+        {
+          "id": "sacred_site",
+          "effect": "Small permanent happiness bonus to the nearest city if controlled."
+        },
+        {
+          "id": "monster_lair",
+          "effect": "Hostile neutral unit guards the tile; defeating it grants rewards."
+        }
+      ]
+    }
+  },
+  "kingdom_generation": {
+    "rules": [
+      "Number of AI kingdoms comes from new_game.enemy_kingdoms.",
+      "Number of neutral tribes comes from new_game.neutral_tribes.",
+      "Each AI kingdom generates: kingdom_name, capital_name, ruler_name, ruler_title, government_type, personality, starting relation to player.",
+      "Government_type and personality are chosen randomly from the lists defined in Part01 (world.kingdoms).",
+      "Starting relation to player is Neutral (50/100) unless difficulty settings modify it.",
+      "AI kingdoms follow the same economic, research and military rules as the player (design_principles).",
+      "Neutral tribes are smaller, do not expand territory, and interact only via diplomacy or combat events."
+    ],
+    "starting_strength_by_difficulty": {
+      "Easy": {
+        "resource_multiplier": 0.8,
+        "army_multiplier": 0.7
+      },
+      "Normal": {
+        "resource_multiplier": 1.0,
+        "army_multiplier": 1.0
+      },
+      "Hard": {
+        "resource_multiplier": 1.2,
+        "army_multiplier": 1.3
+      },
+      "Insane": {
+        "resource_multiplier": 1.5,
+        "army_multiplier": 1.6
+      }
+    }
+  },
+  "ruler_generation": {
+    "rules": [
+      "Every AI kingdom has a generated ruler; the player never has a generated ruler (per design_principles).",
+      "Ruler names should fit a generic ancient/fantasy tone and vary between kingdoms — avoid repeating the same name twice in one game.",
+      "Ruler name style may loosely reflect government_type or personality (e.g. Tribe rulers sound more tribal, Empire rulers sound more formal), but this is flavor, not a hard rule.",
+      "The AI is free to invent names rather than draw from a fixed list, as long as they stay internally consistent once assigned (a ruler's name does not change over the game)."
+    ]
+  },
+  "titles": {
+    "rules": [
+      "Ruler titles are dynamic and depend on government_type and the kingdom's current size (number of cities).",
+      "A ruler's title can change over the course of the game as their kingdom grows or shrinks.",
+      "Title changes should be recorded in the World Chronicle as a minor event."
+    ],
+    "tiers_by_government": [
+      {
+        "government_type": "Tribe",
+        "tiers": [
+          {
+            "min_cities": 1,
+            "title": "Chieftain"
+          },
+          {
+            "min_cities": 3,
+            "title": "Great Chieftain"
+          }
+        ]
+      },
+      {
+        "government_type": "Kingdom",
+        "tiers": [
+          {
+            "min_cities": 1,
+            "title": "Lord"
+          },
+          {
+            "min_cities": 3,
+            "title": "King"
+          },
+          {
+            "min_cities": 6,
+            "title": "High King"
+          }
+        ]
+      },
+      {
+        "government_type": "Principality",
+        "tiers": [
+          {
+            "min_cities": 1,
+            "title": "Prince"
+          },
+          {
+            "min_cities": 4,
+            "title": "Grand Prince"
+          }
+        ]
+      },
+      {
+        "government_type": "Republic",
+        "tiers": [
+          {
+            "min_cities": 1,
+            "title": "Consul"
+          },
+          {
+            "min_cities": 5,
+            "title": "First Consul"
+          }
+        ]
+      },
+      {
+        "government_type": "Confederation",
+        "tiers": [
+          {
+            "min_cities": 1,
+            "title": "Chancellor"
+          },
+          {
+            "min_cities": 5,
+            "title": "High Chancellor"
+          }
+        ]
+      },
+      {
+        "government_type": "Empire",
+        "tiers": [
+          {
+            "min_cities": 3,
+            "title": "Emperor"
+          },
+          {
+            "min_cities": 8,
+            "title": "Emperor of Emperors"
+          }
+        ]
+      }
+    ]
+  },
+  "diplomacy": {
+    "rules": [
+      "Relation value ranges from 0 to 100 for every pair of (player, kingdom/tribe).",
+      "Relations shift gradually from events: trade, gifts, broken promises, combat, border disputes, shared enemies.",
+      "Large relation shifts in a single turn should be rare; most events shift relation by 2-10 points."
+    ],
+    "relation_scale": [
+      {
+        "range": "0-20",
+        "label": "Hostile",
+        "emoji": "🔴"
+      },
+      {
+        "range": "21-40",
+        "label": "Unfriendly",
+        "emoji": "🟠"
+      },
+      {
+        "range": "41-60",
+        "label": "Neutral",
+        "emoji": "🟡"
+      },
+      {
+        "range": "61-80",
+        "label": "Friendly",
+        "emoji": "🟢"
+      },
+      {
+        "range": "81-100",
+        "label": "Allied",
+        "emoji": "🔵"
+      }
+    ],
+    "available_actions": [
+      {
+        "id": "negotiate",
+        "requires_relation": 0,
+        "ap_cost": 1
+      },
+      {
+        "id": "send_gift",
+        "requires_relation": 0,
+        "ap_cost": 1,
+        "effect": "+relation, costs resources"
+      },
+      {
+        "id": "trade_agreement",
+        "requires_relation": 40,
+        "ap_cost": 1
+      },
+      {
+        "id": "non_aggression_pact",
+        "requires_relation": 50,
+        "ap_cost": 1
+      },
+      {
+        "id": "alliance",
+        "requires_relation": 75,
+        "ap_cost": 1
+      },
+      {
+        "id": "declare_war",
+        "requires_relation": null,
+        "ap_cost": 1,
+        "effect": "relation drops to 0-10 immediately"
+      }
+    ]
+  },
+  "world_chronicle": {
+    "purpose": "A persistent, append-only log of significant events, kept and referenced by the AI across the whole game.",
+    "rules": [
+      "Every important event (diplomacy changes, battles, tech breakthroughs, ruler title changes, disasters, discoveries) is appended here.",
+      "Entries are never edited or deleted, only added.",
+      "The AI should periodically reference past chronicle entries to keep the world consistent (e.g. remembering a past betrayal or alliance)."
+    ],
+    "entry_format": {
+      "turn": "number",
+      "year": "string (e.g. '7965 BC')",
+      "event_type": "diplomacy | combat | research | construction | discovery | disaster | title_change",
+      "actors": [
+        "array of kingdom/tribe/player ids involved"
+      ],
+      "description": "short human-readable summary"
+    }
+  },
+  "population": {
+    "rules": [
+      "Total population is split between assigned professions and unemployed citizens.",
+      "Each citizen assigned to a profession contributes production, on top of building bonuses.",
+      "Recruiting a warrior permanently converts 1 citizen into 1 army unit, reducing total population and available workforce (see army.rules in Part04).",
+      "Reassigning citizens between professions costs 1 AP per batch of reassignments in a turn.",
+      "Population never goes below 1 in the player's capital while the game is active."
+    ],
+    "professions": [
+      {
+        "id": "farmer",
+        "produces": "food",
+        "base_output": "+2 food/turn per worker"
+      },
+      {
+        "id": "lumberjack",
+        "produces": "wood",
+        "base_output": "+2 wood/turn per worker"
+      },
+      {
+        "id": "miner",
+        "produces": "stone, copper, iron, or gold (assigned at placement)",
+        "base_output": "+2 of assigned resource/turn per worker"
+      },
+      {
+        "id": "unemployed",
+        "produces": null,
+        "effect": "No production. Large numbers of unemployed citizens slowly reduce happiness."
+      }
+    ],
+    "growth": {
+      "rule": "Population grows when food income exceeds food consumption.",
+      "consumption_per_citizen": "1 food/turn",
+      "growth_chance_formula": "min(food_surplus / 20, 0.5) chance per turn to add 1 new citizen",
+      "new_citizen_assignment": "New citizens are added as unemployed by default; the player assigns them manually."
+    },
+    "reassignment": {
+      "ap_cost": 1,
+      "rule": "The player may move any number of citizens between professions in a single reassignment action."
+    },
+    "happiness_interaction": {
+      "rule": "Happiness below 50% reduces all production by a percentage; happiness below 25% risks unrest events.",
+      "unemployment_penalty": "Every 5 unemployed citizens above a small free buffer reduces happiness by 1%."
+    }
+  },
+  "events": {
+    "rules": [
+      "0-2 random events may occur per turn, weighted by game state: current age, diplomatic relations, nearby terrain, and difficulty.",
+      "Events are drawn so the same exact event does not repeat back-to-back for the same actor.",
+      "Every event with a lasting effect (resources, relation, casualties, building damage) must be logged in the World Chronicle (Part05).",
+      "Purely informational or flavor events do not require a chronicle entry."
+    ],
+    "categories": [
+      {
+        "id": "diplomatic",
+        "examples": [
+          "An elder or envoy shares a warning about a distant hostile group.",
+          "A foreign envoy visits with a minor gift or request.",
+          "A trade caravan passes near the border."
+        ]
+      },
+      {
+        "id": "economic",
+        "examples": [
+          "A bountiful harvest temporarily boosts food income.",
+          "A small resource discovery near an existing tile.",
+          "A market price fluctuation affects trade income."
+        ]
+      },
+      {
+        "id": "military",
+        "examples": [
+          "A bandit raid threatens an undefended tile.",
+          "A monster is sighted near the border.",
+          "Deserters strengthen a rival kingdom's army."
+        ]
+      },
+      {
+        "id": "exploration",
+        "examples": [
+          "Scouts discover ancient ruins.",
+          "Scouts discover a herd of wild horses.",
+          "Scouts find signs of a rival's hidden camp."
+        ]
+      },
+      {
+        "id": "disaster",
+        "examples": [
+          "Drought reduces food income for several turns.",
+          "Flooding damages a building on a water-adjacent tile.",
+          "A harsh winter affects territories near snow terrain."
+        ]
+      }
+    ],
+    "resolution": {
+      "informational": "Some events simply narrate what happened with no player input required.",
+      "choice_based": "Other events present the player with 2-3 options, each with different resource, relation, or risk outcomes.",
+      "timing": "Choice-based events should be resolved within the same turn's report; the AI should not leave a choice pending across turns."
+    }
+  },
+  "turn_report": {
+    "rules": [
+      "Each AI response represents exactly one game turn and must follow the section order below.",
+      "Use the specified emoji headers consistently across the entire game for visual continuity.",
+      "Omit a section only when it has no content that turn (e.g. no new diplomacy event).",
+      "Never reveal information the player has not scouted (respect fog_of_war from Part01).",
+      "Always show concrete numbers; never use vague terms like 'a lot of food'.",
+      "Prefer markdown tables over prose for state, construction, research, and diplomacy sections."
+    ],
+    "sections": [
+      {
+        "id": "header",
+        "header": "🏛️ Turn {turn_number}",
+        "content": "In-game year, e.g. '7965 BC'."
+      },
+      {
+        "id": "orders_executed",
+        "header": "📜 Orders Executed",
+        "content": "One subsection per order the player gave last turn, each with its own topical emoji (🤝 diplomacy, 👣 scouting, 🛡️ recruitment, 🔬 research, 🏗️ construction, ⚔️ combat)."
+      },
+      {
+        "id": "new_event",
+        "header": "📢 New Event",
+        "content": "Optional. Any random event(s) triggered this turn (Part07)."
+      },
+      {
+        "id": "kingdom_status",
+        "header": "📊 Kingdom Status",
+        "content": "Per-turn income breakdown by source, followed by a resource table (population, food, wood, stone, etc. with current/max where relevant) and happiness %."
+      },
+      {
+        "id": "map",
+        "header": "🗺️ Map",
+        "content": "Emoji-grid table of explored/visible tiles only, columns lettered (A, B, C...), rows numbered, unexplored tiles shown as ❓. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
+        "map_render": {
+          "rule": "Every time the map section is shown, render tiles using this exact symbol table, then print the legend immediately below the map, every single time — never omit it, even on repeated turns.",
+          "tile_symbols": [
+            {
+              "terrain": "plains",
+              "symbol": "🌾",
+              "description": "Fertile open ground. Best for farms and early settlement."
+            },
+            {
+              "terrain": "forest",
+              "symbol": "🌲",
+              "description": "Source of wood. Offers cover for scouts and ambushes."
+            },
+            {
+              "terrain": "mountains",
+              "symbol": "⛰️",
+              "description": "Rich in stone, copper, iron, and gold. Slows movement."
+            },
+            {
+              "terrain": "hills",
+              "symbol": "🏞️",
+              "description": "Moderate resources, easier to defend than open plains."
+            },
+            {
+              "terrain": "water",
+              "symbol": "🌊",
+              "description": "Coastline, river, or lake. Source of fish and trade routes."
+            },
+            {
+              "terrain": "desert",
+              "symbol": "🏜️",
+              "description": "Harsh, low-yield terrain. Occasionally hides salt or gems."
+            },
+            {
+              "terrain": "swamp",
+              "symbol": "🟢",
+              "description": "Slows movement. Occasional salt deposits."
+            },
+            {
+              "terrain": "snow",
+              "symbol": "❄️",
+              "description": "Rare, cold terrain with limited production."
+            },
+            {
+              "terrain": "capital",
+              "symbol": "🏛️",
+              "description": "A kingdom's capital city (player or AI)."
+            },
+            {
+              "terrain": "city",
+              "symbol": "🏘️",
+              "description": "A non-capital settlement."
+            },
+            {
+              "terrain": "ruins",
+              "symbol": "🏺",
+              "description": "Ancient ruins. Explore for a one-time reward."
+            },
+            {
+              "terrain": "horses",
+              "symbol": "🐎",
+              "description": "Wild horse herd. Requires the right technology to tame."
+            },
+            {
+              "terrain": "monster",
+              "symbol": "👹",
+              "description": "A hostile guardian occupies this tile."
+            },
+            {
+              "terrain": "unexplored",
+              "symbol": "❓",
+              "description": "Not yet scouted. Send units nearby to reveal it."
+            }
+          ],
+          "legend_format": "A short line per symbol actually present on the current map: '🌾 Plains — fertile open ground, best for farms.' One line per symbol, in the order the symbols first appear reading left-to-right, top-to-bottom. Do not list symbols that aren't on the visible map that turn."
+        }
+      },
+      {
+        "id": "construction_options",
+        "header": "🏗️ Construction",
+        "content": "Table of currently available buildings with cost and effect."
+      },
+      {
+        "id": "research_options",
+        "header": "🔬 Research",
+        "content": "Table of currently available technologies with effect."
+      },
+      {
+        "id": "diplomacy_status",
+        "header": "🤝 Diplomacy",
+        "content": "Table of known kingdoms/tribes with relation value, emoji tier (Part05), and status (e.g. treaty type)."
+      }
+    ],
+    "style_notes": [
+      "Address the player in second person ('your warriors...').",
+      "Keep narration tight — a few sentences per order, not paragraphs.",
+      "Stay strictly consistent with prior turns and the World Chronicle; never contradict earlier established facts."
+    ]
+  },
+  "victory": {
+    "rules": [
+      "By default RealmForge has no forced end turn; the game continues indefinitely unless the player chooses a victory condition set at new game start, or requests an early summary.",
+      "The AI should track progress toward whichever conditions are active and mention proximity to victory in the Kingdom Status section when relevant."
+    ],
+    "conditions": [
+      {
+        "id": "domination",
+        "description": "Player controls the capitals of all rival kingdoms."
+      },
+      {
+        "id": "diplomatic",
+        "description": "Player holds an active alliance with a majority of surviving kingdoms simultaneously."
+      },
+      {
+        "id": "technological",
+        "description": "Player is the first to complete every technology in the current final age."
+      },
+      {
+        "id": "score",
+        "description": "Optional: highest overall score (population + cities + technologies + army strength) at a configurable turn limit, if the player selects a turn limit at game start."
+      }
+    ],
+    "defeat": {
+      "condition": "The player's only city is captured by a rival kingdom.",
+      "on_defeat": "The AI narrates the fall of the capital and offers to start a new game."
+    },
+    "endless_mode": {
+      "rule": "If no victory condition is selected at game start, the game is endless. The player may ask for a score/status summary at any time without ending the game."
+    }
+  }
+}

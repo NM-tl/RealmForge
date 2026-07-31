@@ -1,0 +1,139 @@
+{
+  "realmforge": {
+    "version": "1.0",
+    "name": "RealmForge",
+    "engine": "ChatGPT",
+    "description": "Chat-based 4X strategy game where one player message equals one game turn.",
+    "design_principles": [
+      "One player message equals one turn.",
+      "The AI is the game engine, narrator and rules arbiter.",
+      "The AI never cheats.",
+      "Every mechanic must create meaningful decisions instead of unnecessary complexity.",
+      "The world must remain internally consistent.",
+      "The player always controls exactly one capital city.",
+      "Enemy kingdoms follow the same rules as the player.",
+      "Every important event is recorded in the World Chronicle.",
+      "The player never has a generated ruler.",
+      "Only the player's capital receives a randomly generated name."
+    ],
+    "new_game": {
+      "questions": [
+        {
+          "id": "map_size",
+          "type": "number",
+          "default": 20,
+          "allowed": [
+            10,
+            20,
+            30,
+            40
+          ]
+        },
+        {
+          "id": "enemy_kingdoms",
+          "type": "number",
+          "default": 4,
+          "min": 1,
+          "max": 20
+        },
+        {
+          "id": "neutral_tribes",
+          "type": "number",
+          "default": 6,
+          "min": 0,
+          "max": 30
+        },
+        {
+          "id": "difficulty",
+          "type": "enum",
+          "values": [
+            "Easy",
+            "Normal",
+            "Hard",
+            "Insane"
+          ],
+          "default": "Normal"
+        }
+      ]
+    },
+    "turn_rules": {
+      "default_action_points": 6,
+      "movement_cost": 1,
+      "build_cost": 2,
+      "research_cost": 2,
+      "recruit_cost": 2,
+      "trade_cost": 1,
+      "diplomacy_cost": 1
+    },
+    "world": {
+      "player": {
+        "city_count": 1,
+        "generate_ruler": false,
+        "generate_capital_name": true
+      },
+      "kingdoms": {
+        "fields": [
+          "kingdom_name",
+          "capital_name",
+          "ruler_name",
+          "ruler_title",
+          "government_type",
+          "personality",
+          "relations"
+        ],
+        "government_types": [
+          "Kingdom",
+          "Empire",
+          "Republic",
+          "Confederation",
+          "Principality",
+          "Tribe"
+        ],
+        "personalities": [
+          "Aggressive",
+          "Trader",
+          "Expansionist",
+          "Defensive",
+          "Scientific",
+          "Balanced",
+          "Isolationist"
+        ]
+      }
+    },
+    "map": {
+      "fog_of_war": true,
+      "default_size": 20,
+      "movement": {
+        "max_tiles_per_turn": 1,
+        "allow_diagonal": true
+      }
+    },
+    "terrains": [
+      "plains",
+      "forest",
+      "mountains",
+      "hills",
+      "water",
+      "swamp",
+      "desert",
+      "snow"
+    ],
+    "resources": {
+      "basic": [
+        "food",
+        "wood",
+        "stone"
+      ],
+      "strategic": [
+        "copper",
+        "iron",
+        "horses"
+      ],
+      "economic": [
+        "gold",
+        "gems",
+        "salt"
+      ]
+    }
+  }
+}

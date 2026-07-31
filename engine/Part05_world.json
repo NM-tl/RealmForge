@@ -1,0 +1,168 @@
+{
+  "map_generation": {
+    "rules": [
+      "Map is generated once at game start based on map_size from new_game settings.",
+      "Terrain is assigned per tile using terrain_distribution probabilities.",
+      "Adjacent tiles should form coherent clusters (e.g. forests near forests, mountains near hills) rather than pure random noise.",
+      "Water tiles form coastlines or lakes, not isolated single tiles, where possible.",
+      "The player's capital is placed on plains or hills, never on water, mountains, swamp or desert.",
+      "Minimum distance between any two capitals (player or AI kingdoms) is 4 tiles.",
+      "Special features are placed after terrain and are rare."
+    ],
+    "terrain_distribution": {
+      "plains": 0.25,
+      "forest": 0.20,
+      "mountains": 0.15,
+      "hills": 0.12,
+      "water": 0.15,
+      "swamp": 0.06,
+      "desert": 0.05,
+      "snow": 0.02
+    },
+    "resource_spawn_chance": {
+      "plains": { "horses": 0.08 },
+      "forest": { "wild_game": 0.10 },
+      "mountains": { "copper": 0.15, "iron": 0.12, "gold": 0.05 },
+      "hills": { "gold": 0.04, "stone_bonus": 0.10 },
+      "water": { "fish": 0.20 },
+      "desert": { "salt": 0.10, "gems": 0.02 },
+      "swamp": { "salt": 0.05 }
+    },
+    "special_features": {
+      "chance_per_tile": 0.02,
+      "types": [
+        {
+          "id": "ancient_ruins",
+          "effect": "One-time reward when explored: resources, gold, or a free technology hint."
+        },
+        {
+          "id": "sacred_site",
+          "effect": "Small permanent happiness bonus to the nearest city if controlled."
+        },
+        {
+          "id": "monster_lair",
+          "effect": "Hostile neutral unit guards the tile; defeating it grants rewards."
+        }
+      ]
+    }
+  },
+
+  "kingdom_generation": {
+    "rules": [
+      "Number of AI kingdoms comes from new_game.enemy_kingdoms.",
+      "Number of neutral tribes comes from new_game.neutral_tribes.",
+      "Each AI kingdom generates: kingdom_name, capital_name, ruler_name, ruler_title, government_type, personality, starting relation to player.",
+      "Government_type and personality are chosen randomly from the lists defined in Part01 (world.kingdoms).",
+      "Starting relation to player is Neutral (50/100) unless difficulty settings modify it.",
+      "AI kingdoms follow the same economic, research and military rules as the player (design_principles).",
+      "Neutral tribes are smaller, do not expand territory, and interact only via diplomacy or combat events."
+    ],
+    "starting_strength_by_difficulty": {
+      "Easy": { "resource_multiplier": 0.8, "army_multiplier": 0.7 },
+      "Normal": { "resource_multiplier": 1.0, "army_multiplier": 1.0 },
+      "Hard": { "resource_multiplier": 1.2, "army_multiplier": 1.3 },
+      "Insane": { "resource_multiplier": 1.5, "army_multiplier": 1.6 }
+    }
+  },
+
+  "ruler_generation": {
+    "rules": [
+      "Every AI kingdom has a generated ruler; the player never has a generated ruler (per design_principles).",
+      "Ruler names should fit a generic ancient/fantasy tone and vary between kingdoms — avoid repeating the same name twice in one game.",
+      "Ruler name style may loosely reflect government_type or personality (e.g. Tribe rulers sound more tribal, Empire rulers sound more formal), but this is flavor, not a hard rule.",
+      "The AI is free to invent names rather than draw from a fixed list, as long as they stay internally consistent once assigned (a ruler's name does not change over the game)."
+    ]
+  },
+
+  "titles": {
+    "rules": [
+      "Ruler titles are dynamic and depend on government_type and the kingdom's current size (number of cities).",
+      "A ruler's title can change over the course of the game as their kingdom grows or shrinks.",
+      "Title changes should be recorded in the World Chronicle as a minor event."
+    ],
+    "tiers_by_government": [
+      {
+        "government_type": "Tribe",
+        "tiers": [
+          { "min_cities": 1, "title": "Chieftain" },
+          { "min_cities": 3, "title": "Great Chieftain" }
+        ]
+      },
+      {
+        "government_type": "Kingdom",
+        "tiers": [
+          { "min_cities": 1, "title": "Lord" },
+          { "min_cities": 3, "title": "King" },
+          { "min_cities": 6, "title": "High King" }
+        ]
+      },
+      {
+        "government_type": "Principality",
+        "tiers": [
+          { "min_cities": 1, "title": "Prince" },
+          { "min_cities": 4, "title": "Grand Prince" }
+        ]
+      },
+      {
+        "government_type": "Republic",
+        "tiers": [
+          { "min_cities": 1, "title": "Consul" },
+          { "min_cities": 5, "title": "First Consul" }
+        ]
+      },
+      {
+        "government_type": "Confederation",
+        "tiers": [
+          { "min_cities": 1, "title": "Chancellor" },
+          { "min_cities": 5, "title": "High Chancellor" }
+        ]
+      },
+      {
+        "government_type": "Empire",
+        "tiers": [
+          { "min_cities": 3, "title": "Emperor" },
+          { "min_cities": 8, "title": "Emperor of Emperors" }
+        ]
+      }
+    ]
+  },
+
+  "diplomacy": {
+    "rules": [
+      "Relation value ranges from 0 to 100 for every pair of (player, kingdom/tribe).",
+      "Relations shift gradually from events: trade, gifts, broken promises, combat, border disputes, shared enemies.",
+      "Large relation shifts in a single turn should be rare; most events shift relation by 2-10 points."
+    ],
+    "relation_scale": [
+      { "range": "0-20", "label": "Hostile", "emoji": "🔴" },
+      { "range": "21-40", "label": "Unfriendly", "emoji": "🟠" },
+      { "range": "41-60", "label": "Neutral", "emoji": "🟡" },
+      { "range": "61-80", "label": "Friendly", "emoji": "🟢" },
+      { "range": "81-100", "label": "Allied", "emoji": "🔵" }
+    ],
+    "available_actions": [
+      { "id": "negotiate", "requires_relation": 0, "ap_cost": 1 },
+      { "id": "send_gift", "requires_relation": 0, "ap_cost": 1, "effect": "+relation, costs resources" },
+      { "id": "trade_agreement", "requires_relation": 40, "ap_cost": 1 },
+      { "id": "non_aggression_pact", "requires_relation": 50, "ap_cost": 1 },
+      { "id": "alliance", "requires_relation": 75, "ap_cost": 1 },
+      { "id": "declare_war", "requires_relation": null, "ap_cost": 1, "effect": "relation drops to 0-10 immediately" }
+    ]
+  },
+
+  "world_chronicle": {
+    "purpose": "A persistent, append-only log of significant events, kept and referenced by the AI across the whole game.",
+    "rules": [
+      "Every important event (diplomacy changes, battles, tech breakthroughs, ruler title changes, disasters, discoveries) is appended here.",
+      "Entries are never edited or deleted, only added.",
+      "The AI should periodically reference past chronicle entries to keep the world consistent (e.g. remembering a past betrayal or alliance)."
+    ],
+    "entry_format": {
+      "turn": "number",
+      "year": "string (e.g. '7965 BC')",
+      "event_type": "diplomacy | combat | research | construction | discovery | disaster | title_change",
+      "actors": ["array of kingdom/tribe/player ids involved"],
+      "description": "short human-readable summary"
+    }
+  }
+}

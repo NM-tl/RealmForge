@@ -1,0 +1,18 @@
+{
+  "engine": "RealmForge",
+  "version": "1.0",
+  "updated": "2026-07-31",
+  "parts": [
+    { "file": "engine/Part01_core.json", "key": "realmforge", "description": "Core rules, new game setup, turn structure, map/terrain/resource definitions." },
+    { "file": "engine/Part02_buildings.json", "key": "buildings", "description": "City and tile buildings, costs, effects, upgrades." },
+    { "file": "engine/Part03_research.json", "key": "research", "description": "Technology tree across Stone/Copper/Bronze/Iron ages." },
+    { "file": "engine/Part04_army.json", "key": "army", "description": "Army, experience levels, equipment tiers, combat resolution." },
+    { "file": "engine/Part05_world.json", "key": "map_generation, kingdom_generation, ruler_generation, titles, diplomacy, world_chronicle", "description": "World generation, AI kingdoms, rulers, dynamic titles, diplomacy, world chronicle log." },
+    { "file": "engine/Part06_population.json", "key": "population", "description": "Citizen professions, growth, reassignment, happiness interaction." },
+    { "file": "engine/Part07_events.json", "key": "events", "description": "Random event system across diplomatic/economic/military/exploration/disaster categories." },
+    { "file": "engine/Part08_turn_report.json", "key": "turn_report", "description": "Mandatory output format the AI must follow every turn." },
+    { "file": "engine/Part09_victory.json", "key": "victory", "description": "Victory conditions, defeat condition, endless mode." }
+  ],
+  "merged_file": "engine/RealmForge_Full_v1.json",
+  "notes": "merged_file contains all parts combined into a single JSON object (one top-level key per part, no collisions). Use it as a fallback when an AI client cannot fetch multiple files."
+}

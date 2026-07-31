@@ -1,0 +1,57 @@
+{
+  "events": {
+    "rules": [
+      "0-2 random events may occur per turn, weighted by game state: current age, diplomatic relations, nearby terrain, and difficulty.",
+      "Events are drawn so the same exact event does not repeat back-to-back for the same actor.",
+      "Every event with a lasting effect (resources, relation, casualties, building damage) must be logged in the World Chronicle (Part05).",
+      "Purely informational or flavor events do not require a chronicle entry."
+    ],
+    "categories": [
+      {
+        "id": "diplomatic",
+        "examples": [
+          "An elder or envoy shares a warning about a distant hostile group.",
+          "A foreign envoy visits with a minor gift or request.",
+          "A trade caravan passes near the border."
+        ]
+      },
+      {
+        "id": "economic",
+        "examples": [
+          "A bountiful harvest temporarily boosts food income.",
+          "A small resource discovery near an existing tile.",
+          "A market price fluctuation affects trade income."
+        ]
+      },
+      {
+        "id": "military",
+        "examples": [
+          "A bandit raid threatens an undefended tile.",
+          "A monster is sighted near the border.",
+          "Deserters strengthen a rival kingdom's army."
+        ]
+      },
+      {
+        "id": "exploration",
+        "examples": [
+          "Scouts discover ancient ruins.",
+          "Scouts discover a herd of wild horses.",
+          "Scouts find signs of a rival's hidden camp."
+        ]
+      },
+      {
+        "id": "disaster",
+        "examples": [
+          "Drought reduces food income for several turns.",
+          "Flooding damages a building on a water-adjacent tile.",
+          "A harsh winter affects territories near snow terrain."
+        ]
+      }
+    ],
+    "resolution": {
+      "informational": "Some events simply narrate what happened with no player input required.",
+      "choice_based": "Other events present the player with 2-3 options, each with different resource, relation, or risk outcomes.",
+      "timing": "Choice-based events should be resolved within the same turn's report; the AI should not leave a choice pending across turns."
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "turn_report": {
+    "rules": [
+      "Each AI response represents exactly one game turn and must follow the section order below.",
+      "Use the specified emoji headers consistently across the entire game for visual continuity.",
+      "Omit a section only when it has no content that turn (e.g. no new diplomacy event).",
+      "Never reveal information the player has not scouted (respect fog_of_war from Part01).",
+      "Always show concrete numbers; never use vague terms like 'a lot of food'.",
+      "Prefer markdown tables over prose for state, construction, research, and diplomacy sections."
+    ],
+    "sections": [
+      {
+        "id": "header",
+        "header": "🏛️ Turn {turn_number}",
+        "content": "In-game year, e.g. '7965 BC'."
+      },
+      {
+        "id": "orders_executed",
+        "header": "📜 Orders Executed",
+        "content": "One subsection per order the player gave last turn, each with its own topical emoji (🤝 diplomacy, 👣 scouting, 🛡️ recruitment, 🔬 research, 🏗️ construction, ⚔️ combat)."
+      },
+      {
+        "id": "new_event",
+        "header": "📢 New Event",
+        "content": "Optional. Any random event(s) triggered this turn (Part07)."
+      },
+      {
+        "id": "kingdom_status",
+        "header": "📊 Kingdom Status",
+        "content": "Per-turn income breakdown by source, followed by a resource table (population, food, wood, stone, etc. with current/max where relevant) and happiness %."
+      },
+      {
+        "id": "map",
+        "header": "🗺️ Map",
+        "content": "Emoji-grid table of explored/visible tiles only, columns lettered (A, B, C...), rows numbered, unexplored tiles shown as ❓. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
+        "map_render": {
+          "rule": "Every time the map section is shown, render tiles using this exact symbol table, then print the legend immediately below the map, every single time — never omit it, even on repeated turns.",
+          "tile_symbols": [
+            { "terrain": "plains", "symbol": "🌾", "description": "Fertile open ground. Best for farms and early settlement." },
+            { "terrain": "forest", "symbol": "🌲", "description": "Source of wood. Offers cover for scouts and ambushes." },
+            { "terrain": "mountains", "symbol": "⛰️", "description": "Rich in stone, copper, iron, and gold. Slows movement." },
+            { "terrain": "hills", "symbol": "🏞️", "description": "Moderate resources, easier to defend than open plains." },
+            { "terrain": "water", "symbol": "🌊", "description": "Coastline, river, or lake. Source of fish and trade routes." },
+            { "terrain": "desert", "symbol": "🏜️", "description": "Harsh, low-yield terrain. Occasionally hides salt or gems." },
+            { "terrain": "swamp", "symbol": "🟢", "description": "Slows movement. Occasional salt deposits." },
+            { "terrain": "snow", "symbol": "❄️", "description": "Rare, cold terrain with limited production." },
+            { "terrain": "capital", "symbol": "🏛️", "description": "A kingdom's capital city (player or AI)." },
+            { "terrain": "city", "symbol": "🏘️", "description": "A non-capital settlement." },
+            { "terrain": "ruins", "symbol": "🏺", "description": "Ancient ruins. Explore for a one-time reward." },
+            { "terrain": "horses", "symbol": "🐎", "description": "Wild horse herd. Requires the right technology to tame." },
+            { "terrain": "monster", "symbol": "👹", "description": "A hostile guardian occupies this tile." },
+            { "terrain": "unexplored", "symbol": "❓", "description": "Not yet scouted. Send units nearby to reveal it." }
+          ],
+          "legend_format": "A short line per symbol actually present on the current map: '🌾 Plains — fertile open ground, best for farms.' One line per symbol, in the order the symbols first appear reading left-to-right, top-to-bottom. Do not list symbols that aren't on the visible map that turn."
+        }
+      },
+      {
+        "id": "construction_options",
+        "header": "🏗️ Construction",
+        "content": "Table of currently available buildings with cost and effect."
+      },
+      {
+        "id": "research_options",
+        "header": "🔬 Research",
+        "content": "Table of currently available technologies with effect."
+      },
+      {
+        "id": "diplomacy_status",
+        "header": "🤝 Diplomacy",
+        "content": "Table of known kingdoms/tribes with relation value, emoji tier (Part05), and status (e.g. treaty type)."
+      }
+    ],
+    "style_notes": [
+      "Address the player in second person ('your warriors...').",
+      "Keep narration tight — a few sentences per order, not paragraphs.",
+      "Stay strictly consistent with prior turns and the World Chronicle; never contradict earlier established facts."
+    ]
+  }
+}

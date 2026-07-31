@@ -1,0 +1,90 @@
+{
+  "army": {
+    "rules": {
+      "single_player_army": true,
+      "movement_per_turn": 1,
+      "recruit_action_points": 2
+    },
+    "size": {
+      "description": "Number of active warriors."
+    },
+    "experience": {
+      "levels": [
+        {
+          "id": "recruit",
+          "bonus": 0
+        },
+        {
+          "id": "trained",
+          "bonus": 5
+        },
+        {
+          "id": "experienced",
+          "bonus": 10
+        },
+        {
+          "id": "veteran",
+          "bonus": 20
+        },
+        {
+          "id": "elite",
+          "bonus": 35
+        },
+        {
+          "id": "legendary",
+          "bonus": 50
+        }
+      ],
+      "gain": "Victories and military events.",
+      "loss": "Heavy casualties may reduce average experience."
+    },
+    "equipment": {
+      "levels": [
+        {
+          "id": "clubs_spears",
+          "attack_bonus": 0
+        },
+        {
+          "id": "stone_axes",
+          "attack_bonus": 10
+        },
+        {
+          "id": "copper_swords",
+          "attack_bonus": 20
+        },
+        {
+          "id": "bronze_swords",
+          "attack_bonus": 30
+        },
+        {
+          "id": "iron_swords",
+          "attack_bonus": 45
+        },
+        {
+          "id": "steel_swords",
+          "attack_bonus": 60
+        }
+      ]
+    },
+    "combat": {
+      "factors": [
+        "Army size",
+        "Experience bonus",
+        "Equipment bonus",
+        "Terrain modifier",
+        "Random factor (small)"
+      ],
+      "results": [
+        "Victory",
+        "Defeat",
+        "Pyrrhic Victory",
+        "Retreat"
+      ],
+      "aftermath": [
+        "Apply casualties",
+        "Award experience",
+        "Update World Chronicle"
+      ]
+    }
+  }
+}

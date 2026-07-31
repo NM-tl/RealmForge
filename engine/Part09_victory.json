@@ -1,0 +1,33 @@
+{
+  "victory": {
+    "rules": [
+      "By default RealmForge has no forced end turn; the game continues indefinitely unless the player chooses a victory condition set at new game start, or requests an early summary.",
+      "The AI should track progress toward whichever conditions are active and mention proximity to victory in the Kingdom Status section when relevant."
+    ],
+    "conditions": [
+      {
+        "id": "domination",
+        "description": "Player controls the capitals of all rival kingdoms."
+      },
+      {
+        "id": "diplomatic",
+        "description": "Player holds an active alliance with a majority of surviving kingdoms simultaneously."
+      },
+      {
+        "id": "technological",
+        "description": "Player is the first to complete every technology in the current final age."
+      },
+      {
+        "id": "score",
+        "description": "Optional: highest overall score (population + cities + technologies + army strength) at a configurable turn limit, if the player selects a turn limit at game start."
+      }
+    ],
+    "defeat": {
+      "condition": "The player's only city is captured by a rival kingdom.",
+      "on_defeat": "The AI narrates the fall of the capital and offers to start a new game."
+    },
+    "endless_mode": {
+      "rule": "If no victory condition is selected at game start, the game is endless. The player may ask for a score/status summary at any time without ending the game."
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "buildings": {
+    "rules": [
+      "Only one building per tile unless upgraded.",
+      "Buildings require terrain and resources.",
+      "Construction consumes 2 AP.",
+      "Only completed buildings provide income."
+    ],
+    "city": [
+      {
+        "id": "warehouse",
+        "name": "Warehouse",
+        "cost": {
+          "wood": 40,
+          "stone": 20
+        },
+        "effect": "+100 storage"
+      },
+      {
+        "id": "workshop",
+        "name": "Workshop",
+        "cost": {
+          "wood": 50,
+          "stone": 40
+        },
+        "effect": "Unlock advanced production"
+      },
+      {
+        "id": "market",
+        "name": "Market",
+        "cost": {
+          "wood": 60,
+          "stone": 30
+        },
+        "effect": "+gold income from trade"
+      }
+    ],
+    "tile": [
+      {
+        "id": "farm",
+        "terrain": "plains",
+        "resource": "food",
+        "cost": {
+          "wood": 20
+        },
+        "yield": "+12 food/turn"
+      },
+      {
+        "id": "lumber_mill",
+        "terrain": "forest",
+        "resource": "wood",
+        "cost": {
+          "stone": 15
+        },
+        "yield": "+10 wood/turn"
+      },
+      {
+        "id": "quarry",
+        "terrain": "mountains|hills",
+        "resource": "stone",
+        "cost": {
+          "wood": 20
+        },
+        "yield": "+8 stone/turn"
+      },
+      {
+        "id": "mine_copper",
+        "terrain": "mountains",
+        "resource": "copper",
+        "cost": {
+          "wood": 25,
+          "stone": 20
+        },
+        "yield": "+4 copper/turn"
+      },
+      {
+        "id": "mine_iron",
+        "terrain": "mountains",
+        "resource": "iron",
+        "cost": {
+          "wood": 30,
+          "stone": 30
+        },
+        "yield": "+4 iron/turn"
+      },
+      {
+        "id": "gold_mine",
+        "terrain": "mountains|hills",
+        "resource": "gold",
+        "cost": {
+          "wood": 30,
+          "stone": 40
+        },
+        "yield": "+3 gold/turn"
+      },
+      {
+        "id": "fishing_camp",
+        "terrain": "water",
+        "resource": "food",
+        "requires": "Fishing",
+        "cost": {
+          "wood": 25
+        },
+        "yield": "+10 food/turn"
+      }
+    ],
+    "upgrades": [
+      "Most buildings have 3 levels.",
+      "Each level increases production by ~50%.",
+      "Upgrade costs more than previous level."
+    ]
+  }
+}

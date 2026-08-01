@@ -45,7 +45,7 @@
       {
         "id": "map",
         "header": "🗺️ Map",
-        "content": "Emoji-grid table of explored/visible tiles only, columns lettered (A, B, C...), rows numbered, unexplored tiles shown as ❓. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
+        "content": "Grid table showing the FULL map at the map_size chosen in Step 3 of the new game questions (e.g. map_size 20 → 20 columns × 20 rows) — always the whole map, never cropped to a smaller area around the capital, even when most of it is still unexplored. Columns are lettered A, B, C, ... Z, then AA, AB, ... (spreadsheet-style) once map_size exceeds 26; rows are numbered 1..map_size. Tiles the player has not explored or cannot currently see are shown as ❓; explored/visible tiles show their real terrain symbol. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
         "map_render": {
           "rule": "Every time the map section is shown, render tiles using this exact symbol table. Below the map, print the legend per legend_format — full on a symbol's first appearance, collapsed afterward.",
           "tile_symbols": [

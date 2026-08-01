@@ -6,7 +6,8 @@
       "Omit a section only when it has no content that turn (e.g. no new diplomacy event).",
       "Never reveal information the player has not scouted (respect fog_of_war from Part01).",
       "Always show concrete numbers; never use vague terms like 'a lot of food'.",
-      "Prefer markdown tables over prose for state, construction, research, and diplomacy sections.",
+      "Prefer markdown tables over prose for state, construction, research, and diplomacy sections; the map section is the one exception — render it as a monospace code block per map_render, not a markdown table.",
+      "Several sections (map legend, Construction, Research, Kingdom Status income breakdown) collapse to a single 'unchanged since Turn {N}' line when nothing changed since they were last shown in full — track this internally like world_chronicle, never shown to the player as bookkeeping.",
       "The player may type a help command (Part01 realmforge.interface.help_command) at any time; respond with the shorthand cheat sheet instead of a normal turn report, and do not advance the turn."
     ],
     "sections": [
@@ -40,14 +41,14 @@
       {
         "id": "kingdom_status",
         "header": "📊 Kingdom Status",
-        "content": "Per-turn income breakdown by source, followed by a resource table (population, food, wood, stone, etc. with current/max where relevant) and happiness %."
+        "content": "Always show, in full, the current resource totals table (population, food, wood, stone, etc. with current/max where relevant) and happiness % — these numbers move every turn and must never be collapsed. The per-turn income breakdown by source is shown in full only the first time, or whenever any source's contribution changes since it was last shown in full (new building completed, profession reassigned, event, tech unlock); otherwise collapse it to one line: 'Income unchanged since Turn {N}' (translated to the language chosen in PROMPT.md Step 0)."
       },
       {
         "id": "map",
         "header": "🗺️ Map",
-        "content": "Grid table showing the FULL map at the map_size chosen in Step 3 of the new game questions (e.g. map_size 20 → 20 columns × 20 rows) — always the whole map, never cropped to a smaller area around the capital, even when most of it is still unexplored. Columns are lettered A, B, C, ... Z, then AA, AB, ... (spreadsheet-style) once map_size exceeds 26; rows are numbered 1..map_size. Tiles the player has not explored or cannot currently see are shown as ❓; explored/visible tiles show their real terrain symbol. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
+        "content": "Grid showing the FULL map at the map_size chosen in Step 3 of the new game questions (e.g. map_size 20 → 20 columns × 20 rows) — always the whole map, never cropped to a smaller area around the capital, even when most of it is still unexplored. Render it as a single fenced monospace code block (```), not a markdown table — a header line of column letters, then one line per row: row number, then its tile symbols separated by a single space. This keeps a 20×20+ grid compact instead of paying markdown-table overhead (borders, header-separator row, cell padding) on every cell. Columns are lettered A, B, C, ... Z, then AA, AB, ... (spreadsheet-style) once map_size exceeds 26; rows are numbered 1..map_size. Tiles the player has not explored or cannot currently see are shown as ❓; explored/visible tiles show their real terrain symbol. Always use the exact symbols from map_render.tile_symbols — never substitute other emoji or plain text for terrain, so the map looks identical across every game and every AI client.",
         "map_render": {
-          "rule": "Every time the map section is shown, render tiles using this exact symbol table. Below the map, print the legend per legend_format — full on a symbol's first appearance, collapsed afterward.",
+          "rule": "Every time the map section is shown, render tiles using this exact symbol table inside the monospace code block described above. Below the code block (outside it), print the legend per legend_format — full on a symbol's first appearance, collapsed afterward.",
           "tile_symbols": [
             { "terrain": "plains", "symbol": "🌾", "description": "Fertile open ground. Best for farms and early settlement." },
             { "terrain": "forest", "symbol": "🌲", "description": "Source of wood. Offers cover for scouts and ambushes." },
@@ -70,12 +71,12 @@
       {
         "id": "construction_options",
         "header": "🏗️ Construction",
-        "content": "Table of currently available buildings with cost and effect."
+        "content": "Table of currently available buildings with cost and effect, shown in full the first time and whenever the set of available buildings or their cost/effect changes since it was last shown in full (new tech unlock, new buildable tile scouted, cost change). If nothing changed since the last full table, collapse to one line: 'Construction unchanged since Turn {N}' (translated to the language chosen in PROMPT.md Step 0)."
       },
       {
         "id": "research_options",
         "header": "🔬 Research",
-        "content": "Table of currently available technologies with effect."
+        "content": "Table of currently available technologies with effect, shown in full the first time and whenever the set of available technologies changes since it was last shown in full (a technology completed, unlocking new options). If nothing changed since the last full table, collapse to one line: 'Research unchanged since Turn {N}' (translated to the language chosen in PROMPT.md Step 0)."
       },
       {
         "id": "diplomacy_status",

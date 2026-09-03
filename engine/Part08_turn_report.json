@@ -41,7 +41,7 @@
       {
         "id": "kingdom_status",
         "header": "📊 Kingdom Status",
-        "content": "Always show, in full, the current resource totals table (population, food, wood, stone, etc. with current/max where relevant) and happiness % — these numbers move every turn and must never be collapsed. The per-turn income breakdown by source is shown in full only the first time, or whenever any source's contribution changes since it was last shown in full (new building completed, profession reassigned, event, tech unlock); otherwise collapse it to one line: 'Income unchanged since Turn {N}' (translated to the language chosen in PROMPT.md Step 0)."
+        "content": "Always show, in full, the current resource totals table (population, food, wood, stone, etc. with current/max where relevant) and happiness % — these numbers move every turn and must never be collapsed. The per-turn income breakdown by source is shown in full only the first time, or whenever any source's contribution changes since it was last shown in full (new building completed, event, tech unlock); otherwise collapse it to one line: 'Income unchanged since Turn {N}' (translated to the language chosen in PROMPT.md Step 0)."
       },
       {
         "id": "map",

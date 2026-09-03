@@ -67,13 +67,12 @@
     },
     "starting_state": {
       "rules": [
-        "The player and every AI kingdom begin with identical population, profession_split, resources, army_size, and starting_technology below — this is the fixed baseline, not affected by difficulty.",
+        "The player and every AI kingdom begin with identical population, resources, army_size, and starting_technology below — this is the fixed baseline, not affected by difficulty.",
         "Only AI kingdoms additionally scale their resources and army_size by kingdom_generation.starting_strength_by_difficulty (Part05) for the chosen difficulty; the player's own starting_state values never change with difficulty — difficulty makes opponents stronger or weaker, not the player.",
         "Any resource not listed under resources starts at 0.",
         "starting_technology is already researched at game start, so its unlocked buildings are buildable from Turn 1 (avoids an empty Construction section on the first turn)."
       ],
       "population": 8,
-      "profession_split": { "farmer": 4, "lumberjack": 2, "unemployed": 2 },
       "resources": { "food": 40, "wood": 30, "stone": 20, "gold": 10 },
       "army_size": 5,
       "starting_technology": ["agriculture"]
@@ -164,8 +163,7 @@
         { "id": "recruit", "syntax": "recruit <count>", "example": "recruit 5", "maps_to": "army recruitment (Part04)" },
         { "id": "move", "syntax": "move army <tile>", "example": "move army D4", "maps_to": "army movement (Part04)" },
         { "id": "scout", "syntax": "scout <tile>", "example": "scout C5", "maps_to": "exploration (map_generation, Part05)" },
-        { "id": "diplomacy", "syntax": "diplomacy <action> <kingdom>", "example": "diplomacy send_gift Valkeran", "maps_to": "diplomacy (Part05)" },
-        { "id": "assign", "syntax": "assign <profession> <count>", "example": "assign farmer 3", "maps_to": "population reassignment (Part06)" }
+        { "id": "diplomacy", "syntax": "diplomacy <action> <kingdom>", "example": "diplomacy send_gift Valkeran", "maps_to": "diplomacy (Part05)" }
       ]
     }
   }

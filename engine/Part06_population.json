@@ -1,47 +1,19 @@
 {
   "population": {
     "rules": [
-      "Total population is split between assigned professions and unemployed citizens.",
-      "Each citizen assigned to a profession contributes production, on top of building bonuses.",
-      "Recruiting N warriors immediately reduces total population by N, drawn only from unemployed citizens — you can recruit at most as many warriors as you currently have unemployed (reassign workers to unemployed first if you need more; see reassignment). This loss is not permanent: like any other population loss, it recovers over subsequent turns through normal growth (see growth) once food income is positive again.",
-      "Reassigning citizens between professions costs 1 AP per batch of reassignments in a turn.",
+      "Population is a single aggregate number for the capital — there is no per-citizen profession assignment.",
+      "Buildings (Part02) produce their stated yield directly, regardless of population size.",
+      "Each citizen consumes 1 food/turn.",
+      "Recruiting N warriors immediately reduces population by N — capped so population never drops below 1. This is a temporary dip, not a permanent loss: it recovers over subsequent turns through normal growth once food income is positive.",
       "Population never goes below 1 in the player's capital while the game is active."
-    ],
-    "professions": [
-      {
-        "id": "farmer",
-        "produces": "food",
-        "base_output": "+2 food/turn per worker"
-      },
-      {
-        "id": "lumberjack",
-        "produces": "wood",
-        "base_output": "+2 wood/turn per worker"
-      },
-      {
-        "id": "miner",
-        "produces": "stone, copper, iron, or gold (assigned at placement)",
-        "base_output": "+2 of assigned resource/turn per worker"
-      },
-      {
-        "id": "unemployed",
-        "produces": null,
-        "effect": "No production. Large numbers of unemployed citizens slowly reduce happiness."
-      }
     ],
     "growth": {
       "rule": "Population grows when food income exceeds food consumption.",
       "consumption_per_citizen": "1 food/turn",
-      "growth_chance_formula": "min(food_surplus / 20, 0.5) chance per turn to add 1 new citizen",
-      "new_citizen_assignment": "New citizens are added as unemployed by default; the player assigns them manually."
-    },
-    "reassignment": {
-      "ap_cost": 1,
-      "rule": "The player may move any number of citizens between professions in a single reassignment action."
+      "growth_chance_formula": "min(food_surplus / 20, 0.5) chance per turn to add 1 new citizen"
     },
     "happiness_interaction": {
-      "rule": "Happiness below 50% reduces all production by a percentage; happiness below 25% risks unrest events.",
-      "unemployment_penalty": "Every 5 unemployed citizens above a small free buffer reduces happiness by 1%."
+      "rule": "Happiness below 50% reduces all production by a percentage; happiness below 25% risks unrest events."
     }
   }
 }

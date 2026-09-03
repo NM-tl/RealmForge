@@ -4,7 +4,7 @@
       "single_player_army": true,
       "movement_per_turn": 1,
       "recruit_action_points": 2,
-      "recruit_source": "Recruiting draws only from unemployed citizens (Part06 population.rules) — the number recruited in one action cannot exceed the current unemployed count. It is a temporary population dip, not a permanent loss; it recovers through normal population growth once food income is positive."
+      "recruit_source": "Recruiting draws directly from total population (Part06 population.rules), capped so population never drops below 1. It is a temporary population dip, not a permanent loss; it recovers through normal population growth once food income is positive."
     },
     "size": {
       "description": "Number of active warriors."

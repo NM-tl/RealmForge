@@ -440,7 +440,8 @@
     "rules": {
       "single_player_army": true,
       "movement_per_turn": 1,
-      "recruit_action_points": 2
+      "recruit_action_points": 2,
+      "recruit_source": "Recruiting draws only from unemployed citizens (Part06 population.rules) — the number recruited in one action cannot exceed the current unemployed count. It is a temporary population dip, not a permanent loss; it recovers through normal population growth once food income is positive."
     },
     "size": {
       "description": "Number of active warriors."
@@ -809,7 +810,7 @@
     "rules": [
       "Total population is split between assigned professions and unemployed citizens.",
       "Each citizen assigned to a profession contributes production, on top of building bonuses.",
-      "Recruiting a warrior permanently converts 1 citizen into 1 army unit, reducing total population and available workforce (see army.rules in Part04).",
+      "Recruiting N warriors immediately reduces total population by N, drawn only from unemployed citizens — you can recruit at most as many warriors as you currently have unemployed (reassign workers to unemployed first if you need more; see reassignment). This loss is not permanent: like any other population loss, it recovers over subsequent turns through normal growth (see growth) once food income is positive again.",
       "Reassigning citizens between professions costs 1 AP per batch of reassignments in a turn.",
       "Population never goes below 1 in the player's capital while the game is active."
     ],
